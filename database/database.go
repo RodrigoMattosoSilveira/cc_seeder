@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/RodrigoMattosoSilveira/cc_seeder/models"
+	"github.com/RodrigoMattosoSilveira/cc_seeder/seeders/person"
     "gorm.io/driver/sqlite"
     "gorm.io/gorm"
     "log"
@@ -17,7 +17,7 @@ func ConnectDB() *gorm.DB {
     }
 
     // Auto-migrate the Person model
-    db.AutoMigrate(&models.Person{})
+    db.AutoMigrate(person.Person{})
 
 	return db
 }

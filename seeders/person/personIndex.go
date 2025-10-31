@@ -1,4 +1,4 @@
-package constants
+package person
 
 const NAME = 0
 const EMAIL = 1

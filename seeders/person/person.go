@@ -1,4 +1,4 @@
-package seeders
+package person
 
 import (
 	"encoding/csv"
@@ -7,8 +7,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/RodrigoMattosoSilveira/cc_seeder/constants"
-	"github.com/RodrigoMattosoSilveira/cc_seeder/models"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -24,7 +22,7 @@ func PersonSeeder (db *gorm.DB)  error {
 	// Open the CSV file
 
 	var count int64
-	db.Model(&models.Person{}).Count(&count)
+	db.Model(&Person{}).Count(&count)
 	if (count > 0) {
 		log.Println("Database already seeded.")
 		return errors.New("database already seeded")
@@ -47,23 +45,23 @@ func PersonSeeder (db *gorm.DB)  error {
 	}
 
 	// Process the rows
-	var person models.Person
-	var persons []models.Person
+	var person Person
+	var persons []Person
 	for _, row := range people {
 		// fmt.Printf("Row %d: %v\n", i, row)
-		person.Name = row[constants.NAME]
-		person.Email = row[constants.EMAIL]
-		person.Cell = row[constants.CELL]
-		hashedPassword, err := HashPassword(row[constants.PASSWORD])
+		person.Name = row[NAME]
+		person.Email = row[EMAIL]
+		person.Cell = row[CELL]
+		hashedPassword, err := HashPassword(row[PASSWORD])
 		if err != nil {
 			return errors.New("unable to hash password")
 		}
-		err = CheckPassword(row[constants.PASSWORD], hashedPassword)
+		err = CheckPassword(row[PASSWORD], hashedPassword)
 			if err != nil {
 			fmt.Println("Invalid password")
 		}
 		person.Password = hashedPassword
-		person.Role = row[constants.ROLE]
+		person.Role = row[ROLE]
 		persons = append(persons, person)
 	}
 	db.Create(persons)

@@ -1,4 +1,4 @@
-package models
+package person
 
 import "gorm.io/gorm"
 
